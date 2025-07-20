@@ -55,8 +55,9 @@ urlpatterns = [
     path('api/coupons/validate/', validate_coupon_public, name='validate_coupon_public'),
 ]
 
-# Servir les fichiers media et statiques en développement
+# Servir les fichiers media et statiques
 import os
-if settings.DEBUG or os.environ.get('DOCKER_ENV'):
+# Servir les fichiers media (développement ET production Railway)
+if settings.DEBUG or os.environ.get('DOCKER_ENV') or os.environ.get('SERVE_MEDIA'):
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
