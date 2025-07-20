@@ -26,7 +26,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/ .
 
 # Créer les répertoires pour les fichiers statiques et media
-RUN mkdir -p /app/staticfiles /app/media
+RUN mkdir -p /app/staticfiles /app/media /app/media/users /app/media/users/photos
+
+# Créer un fichier de test pour vérifier que les media fonctionnent
+RUN echo "Test image file" > /app/media/users/photos/test.txt
 
 # Créer un fichier de test dans media
 RUN echo "Test media file" > /app/media/test.txt
