@@ -39,6 +39,11 @@ CSRF_TRUSTED_ORIGINS = [
     'https://permini-auto-ecole-production.up.railway.app',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    # Vercel URLs pour l'admin
+    'https://*.vercel.app',
+    'https://permini-auto-ecole.vercel.app',
+    'https://permini-auto-ecole-git-main.vercel.app',
+    'https://permini-auto-ecole-ahmeddev23.vercel.app',
 ]
 
 
@@ -261,7 +266,10 @@ CORS_ALLOWED_ORIGINS = [
     "https://permini-auto-ecole-production.up.railway.app",
     "https://permini-auto-ecole.vercel.app",
     "https://permini-auto-ecole-git-main.vercel.app",
+    "https://permini-auto-ecole-git-main-ahmeddev23.vercel.app",
     "https://permini-auto-ecole-ahmeddev23.vercel.app",
+    # Toutes les URLs Vercel possibles
+    "https://*.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

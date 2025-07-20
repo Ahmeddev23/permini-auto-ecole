@@ -22,7 +22,10 @@ class AdminWebSocketService {
 
 
     this.isConnecting = true;
-    const wsUrl = `ws://127.0.0.1:8000/ws/admin-notifications/`;
+
+    // Utiliser les variables d'environnement pour WebSocket
+    const WS_BASE_URL = import.meta.env.VITE_WS_URL || 'ws://127.0.0.1:8000/ws';
+    const wsUrl = `${WS_BASE_URL}/admin-notifications/`;
 
 
     

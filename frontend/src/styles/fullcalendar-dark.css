@@ -64,29 +64,39 @@
   font-weight: 600;
 }
 
-/* Boutons */
+/* Boutons - style plus moderne et élégant */
 .dark .fc-button {
-  background-color: #4b5563 !important;
-  border-color: #6b7280 !important;
+  background: linear-gradient(135deg, #4b5563, #374151) !important;
+  border: 1px solid #6b7280 !important;
   color: #f3f4f6 !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
 .dark .fc-button:hover {
-  background-color: #6b7280 !important;
+  background: linear-gradient(135deg, #6b7280, #4b5563) !important;
   border-color: #9ca3af !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
 }
 
 .dark .fc-button:focus {
-  box-shadow: 0 0 0 2px #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+  outline: none !important;
 }
 
 .dark .fc-button-active {
-  background-color: #3b82f6 !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
   border-color: #2563eb !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3) !important;
 }
 
 .dark .fc-button-primary {
-  background-color: #3b82f6 !important;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
   border-color: #2563eb !important;
 }
 
@@ -197,20 +207,38 @@
   color: #e5e7eb;
 }
 
-/* Événements par type */
+/* Événements par type - couleurs plus douces et harmonieuses */
 .dark .fc-event.session-conduite {
-  background-color: #10b981;
+  background: linear-gradient(135deg, #10b981, #059669);
   border-color: #059669;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
 }
 
 .dark .fc-event.session-code {
-  background-color: #f59e0b;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
   border-color: #d97706;
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
 }
 
 .dark .fc-event.session-examen {
-  background-color: #ef4444;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   border-color: #dc2626;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+/* Événements par défaut - style amélioré */
+.dark .fc-event {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-color: #2563eb;
+  color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+  transition: all 0.2s ease;
+}
+
+.dark .fc-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
 }
 
 /* Popover et tooltips */
