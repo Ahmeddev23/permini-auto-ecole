@@ -28,6 +28,9 @@ COPY backend/ .
 # Créer les répertoires pour les fichiers statiques et media
 RUN mkdir -p /app/staticfiles /app/media
 
+# Créer un fichier de test dans media
+RUN echo "Test media file" > /app/media/test.txt
+
 # Copier et rendre exécutable le script d'entrée
 COPY backend/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

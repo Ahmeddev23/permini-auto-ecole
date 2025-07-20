@@ -76,8 +76,9 @@ urlpatterns = [
 # Servir les fichiers media et statiques
 import os
 
-# TOUJOURS servir les fichiers media (pour Railway)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Servir les fichiers media (avec votre variable SERVE_MEDIA)
+if settings.DEBUG or os.environ.get('SERVE_MEDIA') == 'true':
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Servir les fichiers statiques en développement
 if settings.DEBUG or os.environ.get('DOCKER_ENV') or os.environ.get('SERVE_MEDIA'):
