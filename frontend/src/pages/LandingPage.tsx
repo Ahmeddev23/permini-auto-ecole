@@ -78,7 +78,7 @@ export const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       {/* Hero Section Élégante et Moderne */}
-      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-20 lg:pt-24">
 
         {/* Éléments décoratifs subtils avec animations */}
         <div className="absolute inset-0 overflow-hidden">
