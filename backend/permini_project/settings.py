@@ -234,6 +234,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
+    # Production URLs - Vercel (à remplacer par vos vraies URLs)
+    "https://permini-auto-ecole.vercel.app",
+    "https://permini-auto-ecole-git-main.vercel.app",
+    "https://permini-auto-ecole-ahmeddev23.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
