@@ -18,6 +18,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import dashboardService from '../../services/dashboardService';
 import { ScheduleList, SESSION_TYPES, SESSION_STATUS, ScheduleCreate } from '../../types/schedule';
+import '../../styles/fullcalendar-dark.css';
 import { InstructorList } from '../../types/instructor';
 import { StudentList } from '../../types/student';
 import { VehicleList } from '../../types/vehicle';
@@ -812,22 +813,24 @@ const InstructorSchedulePage: React.FC = () => {
               <span className="ml-2 text-gray-600 dark:text-gray-400">Chargement du calendrier...</span>
             </div>
           ) : (
-            <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="timeGridWeek"
-            locale="fr"
-            timeZone="local"
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            }}
-            buttonText={{
-              today: "Aujourd'hui",
-              month: 'Mois',
-              week: 'Semaine',
-              day: 'Jour'
-            }}
+            <div className="fullcalendar-container">
+              <FullCalendar
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                initialView="timeGridWeek"
+                locale="fr"
+                timeZone="local"
+                height="auto"
+                headerToolbar={{
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                }}
+                buttonText={{
+                  today: "Aujourd'hui",
+                  month: 'Mois',
+                  week: 'Semaine',
+                  day: 'Jour'
+                }}
             height="auto"
             events={convertSchedulesToEvents()}
             eventDidMount={(info) => {
@@ -945,7 +948,8 @@ const InstructorSchedulePage: React.FC = () => {
             eventOverlap={true}
             slotEventOverlap={false}
             dayHeaderFormat={{ weekday: 'long', day: 'numeric', month: 'short' }}
-          />
+              />
+            </div>
           )}
         </div>
       </div>

@@ -10,6 +10,7 @@ import frLocale from '@fullcalendar/core/locales/fr';
 import { toast } from 'react-hot-toast';
 import { dashboardService } from '../../services/dashboardService';
 import { ScheduleCreate, SESSION_TYPES, SESSION_COLORS } from '../../types/schedule';
+import '../../styles/fullcalendar-dark.css';
 import { useAuth } from '../../contexts/AuthContext';
 
 // Types de session pour la formation (sans les examens)
@@ -798,22 +799,24 @@ const StudentSchedulePage: React.FC = () => {
                 <span className="ml-2 text-gray-600 dark:text-gray-400">Chargement du calendrier...</span>
               </div>
             ) : (
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="timeGridWeek"
-            locale="fr"
-            timeZone="local"
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            }}
-            buttonText={{
-              today: "Aujourd'hui",
-              month: 'Mois',
-              week: 'Semaine',
-              day: 'Jour'
-            }}
+          <div className="fullcalendar-container">
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="timeGridWeek"
+              locale="fr"
+              timeZone="local"
+              height="auto"
+              headerToolbar={{
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              }}
+              buttonText={{
+                today: "Aujourd'hui",
+                month: 'Mois',
+                week: 'Semaine',
+                day: 'Jour'
+              }}
             height="auto"
             events={convertSchedulesToEvents()}
             editable={!isOwnSchedule}
@@ -843,7 +846,8 @@ const StudentSchedulePage: React.FC = () => {
               minute: '2-digit',
               hour12: false
             }}
-          />
+              />
+            </div>
             )}
           </div>
         </div>
