@@ -30,6 +30,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { Logo } from '../components/common/Logo';
 import { Button } from '../components/common/Button';
 import { Card } from '../components/common/Card';
+import { VideoModal, useVideoModal } from '../components/common/VideoModal';
 
 // Composant pour les éléments flottants subtils
 const FloatingElement: React.FC<{ delay: number; children: React.ReactNode; className?: string }> = ({ delay, children, className = "" }) => (
@@ -74,6 +75,10 @@ export const LandingPage: React.FC = () => {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, -100]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.8]);
+
+  // Modal vidéo pour la démo
+  const videoModal = useVideoModal();
+  const DEMO_VIDEO_ID = 'y3Db1rqZBG0'; // ID de votre vidéo YouTube
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
@@ -345,15 +350,15 @@ export const LandingPage: React.FC = () => {
                     whileTap={{ scale: 0.98 }}
                     className="relative group"
                   >
-                    <Link to="/demo">
-                      <motion.button
-                        className="relative px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-all duration-200 flex items-center overflow-hidden"
-                        whileHover={{
-                          borderColor: "rgb(59 130 246)",
-                          color: "rgb(59 130 246)",
-                          boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
-                        }}
-                      >
+                    <motion.button
+                      onClick={videoModal.openModal}
+                      className="relative px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-all duration-200 flex items-center overflow-hidden"
+                      whileHover={{
+                        borderColor: "rgb(59 130 246)",
+                        color: "rgb(59 130 246)",
+                        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+                      }}
+                    >
                         {/* Background hover effect */}
                         <motion.div
                           className="absolute inset-0 bg-blue-50 dark:bg-blue-900/20"
@@ -379,7 +384,6 @@ export const LandingPage: React.FC = () => {
                           {t('landing.hero.cta.secondary')}
                         </div>
                       </motion.button>
-                    </Link>
                   </motion.div>
                 </motion.div>
 
@@ -1621,6 +1625,14 @@ export const LandingPage: React.FC = () => {
           </motion.div>
         </div>
       </footer>
+
+      {/* Modal Vidéo Demo */}
+      <VideoModal
+        isOpen={videoModal.isOpen}
+        onClose={videoModal.closeModal}
+        videoId={DEMO_VIDEO_ID}
+        title="Démonstration Permini - Plateforme Auto-École"
+      />
 
     </div>
   );
