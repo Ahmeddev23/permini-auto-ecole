@@ -1,0 +1,29 @@
+# Version simplifiée pour debug
+FROM node:18-alpine
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier tout le projet
+COPY . .
+
+# Copier le fichier d'environnement
+COPY .env.docker .env
+
+# Installer les dépendances
+RUN npm install
+
+# Debug: vérifier les installations
+RUN npm list vite
+RUN which vite || echo "Vite not in PATH"
+RUN npx vite --version
+
+# Construire l'application
+RUN npm run build
+
+# Servir avec un serveur simple
+RUN npm install -g serve
+
+EXPOSE 3000
+
+CMD ["serve", "-s", "dist", "-l", "3000"]

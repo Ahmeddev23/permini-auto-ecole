@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Service Redis pour les WebSockets
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # Service Backend Django
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      # Django Settings
+      - SECRET_KEY=django-insecure-&5e9hdx5gm+xi_u0$ju4@$0oqd(fmejkxrx5m4sh5z-zkm4!hr
+      - DEBUG=True
+      - DOCKER_ENV=true
+      - ALLOWED_HOSTS=localhost,127.0.0.1,.railway.app,.up.railway.app
+      
+      # Supabase Database
+      - DB_NAME=postgres
+      - DB_USER=postgres.nxijwsxstnooeoboqfxf
+      - DB_PASSWORD=AhmedYassine23$$
+      - DB_HOST=aws-0-eu-west-3.pooler.supabase.com
+      - DB_PORT=6543
+      
+      # Redis pour WebSockets
+      - REDIS_URL=redis://redis:6379
+      
+      # Email Settings
+      - EMAIL_HOST=smtp.gmail.com
+      - EMAIL_PORT=587
+      - EMAIL_USE_TLS=True
+      - EMAIL_HOST_USER=perminitn@gmail.com
+      - EMAIL_HOST_PASSWORD=cszb gwfs mabp glux
+    
+    depends_on:
+      - redis
+    
+    volumes:
+      - ./backend/media:/app/media
+      - ./backend/staticfiles:/app/staticfiles
+    
+    restart: unless-stopped
+
+  # Service Frontend React
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  redis_data:
