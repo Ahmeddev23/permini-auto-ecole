@@ -27,12 +27,30 @@ def health_check(request):
         'message': 'Permini Auto-École Backend is running!',
         'version': '1.0.0'
     })
+
+def media_debug(request):
+    """Debug endpoint pour vérifier les fichiers media"""
+    import os
+    media_root = settings.MEDIA_ROOT
+    try:
+        files = os.listdir(media_root) if os.path.exists(media_root) else []
+        return JsonResponse({
+            'media_root': str(media_root),
+            'media_url': settings.MEDIA_URL,
+            'exists': os.path.exists(media_root),
+            'files': files,
+            'debug': settings.DEBUG,
+            'serve_media': os.environ.get('SERVE_MEDIA', 'Not set')
+        })
+    except Exception as e:
+        return JsonResponse({'error': str(e)})
 from admin_dashboard.views import validate_coupon_public
 
 urlpatterns = [
     # Health check pour Railway
     path('', health_check, name='health_check'),
     path('health/', health_check, name='health_check_alt'),
+    path('debug/media/', media_debug, name='media_debug'),
 
     path('admin/', admin.site.urls),
 
@@ -57,7 +75,10 @@ urlpatterns = [
 
 # Servir les fichiers media et statiques
 import os
-# Servir les fichiers media (développement ET production Railway)
+
+# TOUJOURS servir les fichiers media (pour Railway)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Servir les fichiers statiques en développement
 if settings.DEBUG or os.environ.get('DOCKER_ENV') or os.environ.get('SERVE_MEDIA'):
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
