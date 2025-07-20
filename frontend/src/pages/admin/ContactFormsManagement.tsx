@@ -34,6 +34,7 @@ const ContactFormsManagement: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedForm, setSelectedForm] = useState<ContactForm | null>(null);
   const [showResponseModal, setShowResponseModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
   const [responseText, setResponseText] = useState('');
 
   useEffect(() => {
@@ -79,6 +80,11 @@ const ContactFormsManagement: React.FC = () => {
         ? prev.filter(formId => formId !== id)
         : [...prev, id]
     );
+  };
+
+  const handleView = (form: ContactForm) => {
+    setSelectedForm(form);
+    setShowViewModal(true);
   };
 
   const handleRespond = (form: ContactForm) => {
@@ -363,7 +369,11 @@ const ContactFormsManagement: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 text-right text-sm font-medium">
                     <div className="flex items-center justify-end space-x-2">
-                      <button className="text-blue-600 hover:text-blue-900">
+                      <button
+                        onClick={() => handleView(form)}
+                        className="text-blue-600 hover:text-blue-900"
+                        title="Voir les détails"
+                      >
                         <EyeIcon className="h-5 w-5" />
                       </button>
                       <button
@@ -478,6 +488,128 @@ const ContactFormsManagement: React.FC = () => {
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
                 >
                   Envoyer la réponse
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de visualisation */}
+      {showViewModal && selectedForm && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-gray-900">
+                  Détails du formulaire de contact
+                </h3>
+                <button
+                  onClick={() => {
+                    setShowViewModal(false);
+                    setSelectedForm(null);
+                  }}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <XCircleIcon className="h-6 w-6" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {/* Informations de contact */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-medium text-gray-900 mb-3">Informations de contact</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Nom</label>
+                      <p className="text-sm text-gray-900">{selectedForm.name}</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Email</label>
+                      <p className="text-sm text-gray-900">{selectedForm.email}</p>
+                    </div>
+                    {selectedForm.phone && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Téléphone</label>
+                        <p className="text-sm text-gray-900">{selectedForm.phone}</p>
+                      </div>
+                    )}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Date</label>
+                      <p className="text-sm text-gray-900">
+                        {new Date(selectedForm.created_at).toLocaleDateString('fr-FR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-medium text-gray-900 mb-3">Message</h4>
+                  <div className="mb-3">
+                    <label className="block text-sm font-medium text-gray-700">Sujet</label>
+                    <p className="text-sm text-gray-900">{selectedForm.subject}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Contenu</label>
+                    <p className="text-sm text-gray-900 whitespace-pre-wrap">{selectedForm.message}</p>
+                  </div>
+                </div>
+
+                {/* Statut et priorité */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-medium text-gray-900 mb-3">Statut et priorité</h4>
+                  <div className="flex items-center space-x-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+                      {getStatusBadge(selectedForm.status)}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Priorité</label>
+                      {getPriorityBadge(selectedForm.priority)}
+                    </div>
+                  </div>
+                  {selectedForm.assigned_to_name && (
+                    <div className="mt-3">
+                      <label className="block text-sm font-medium text-gray-700">Assigné à</label>
+                      <p className="text-sm text-gray-900">{selectedForm.assigned_to_name}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Réponse admin si elle existe */}
+                {selectedForm.admin_response && (
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-gray-900 mb-3">Réponse de l'administrateur</h4>
+                    <p className="text-sm text-gray-900 whitespace-pre-wrap">{selectedForm.admin_response}</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-end space-x-3 mt-6">
+                <button
+                  onClick={() => {
+                    setShowViewModal(false);
+                    handleRespond(selectedForm);
+                  }}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                >
+                  Répondre
+                </button>
+                <button
+                  onClick={() => {
+                    setShowViewModal(false);
+                    setSelectedForm(null);
+                  }}
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                >
+                  Fermer
                 </button>
               </div>
             </div>
