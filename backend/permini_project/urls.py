@@ -18,9 +18,22 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import JsonResponse
+
+def health_check(request):
+    """Simple health check endpoint for Railway"""
+    return JsonResponse({
+        'status': 'healthy',
+        'message': 'Permini Auto-École Backend is running!',
+        'version': '1.0.0'
+    })
 from admin_dashboard.views import validate_coupon_public
 
 urlpatterns = [
+    # Health check pour Railway
+    path('', health_check, name='health_check'),
+    path('health/', health_check, name='health_check_alt'),
+
     path('admin/', admin.site.urls),
 
     # API URLs
