@@ -32,6 +32,15 @@ import dj_database_url
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,.railway.app,.up.railway.app').split(',')
 
+# CSRF Configuration pour Railway
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+    'https://*.up.railway.app',
+    'https://permini-auto-ecole-production.up.railway.app',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+
 
 # Application definition
 
@@ -244,7 +253,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
-    # Production URLs - Vercel (à remplacer par vos vraies URLs)
+    # Production URLs - Railway et Vercel
+    "https://permini-auto-ecole-production.up.railway.app",
     "https://permini-auto-ecole.vercel.app",
     "https://permini-auto-ecole-git-main.vercel.app",
     "https://permini-auto-ecole-ahmeddev23.vercel.app",
