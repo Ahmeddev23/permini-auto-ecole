@@ -517,6 +517,7 @@ export const Navbar: React.FC = () => {
               className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
+                {/* Navigation Links */}
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
@@ -527,8 +528,118 @@ export const Navbar: React.FC = () => {
                     {item.name}
                   </Link>
                 ))}
+
+                {/* Divider */}
+                <div className="border-t border-gray-200 dark:border-gray-700 my-3"></div>
+
+                {/* Language Selector Mobile */}
+                <div className="px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {t('nav.language')}
+                    </span>
+                    <div className="flex space-x-2">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            changeLanguage(lang);
+                            setShowMobileMenu(false);
+                          }}
+                          className={`px-2 py-1 text-xs rounded ${
+                            currentLanguage.code === lang.code
+                              ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                          }`}
+                        >
+                          {lang.flag} {lang.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Auth Buttons Mobile */}
+                {!user && (
+                  <div className="px-3 py-2 space-y-2">
+                    <button
+                      onClick={() => {
+                        navigate('/login');
+                        setShowMobileMenu(false);
+                      }}
+                      className="w-full px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 transition-all duration-200"
+                    >
+                      {t('auth.login')}
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate('/register');
+                        setShowMobileMenu(false);
+                      }}
+                      className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center"
+                    >
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      {t('auth.free.trial')}
+                    </button>
+                  </div>
+                )}
+
+                {/* User Menu Mobile */}
+                {user && (
+                  <div className="px-3 py-2 space-y-2">
+                    <div className="flex items-center space-x-3 p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <img
+                        src={user.avatar || `https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}&background=3B82F6&color=fff`}
+                        alt={`${user.firstName} ${user.lastName}`}
+                        className="h-8 w-8 rounded-full object-cover"
+                      />
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {user.firstName} {user.lastName}
+                      </span>
+                    </div>
+                    <Link
+                      to="/profile"
+                      className="flex items-center w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      <User className="h-4 w-4 mr-3" />
+                      {t('nav.profile')}
+                    </Link>
+                    <Link
+                      to="/settings"
+                      className="flex items-center w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      <Settings className="h-4 w-4 mr-3" />
+                      {t('nav.settings')}
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setShowMobileMenu(false);
+                      }}
+                      className="flex items-center w-full px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
+                    >
+                      <LogOut className="h-4 w-4 mr-3" />
+                      {t('nav.logout')}
+                    </button>
+                  </div>
+                )}
               </div>
             </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {showMobileMenu && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setShowMobileMenu(false)}
+            />
           )}
         </AnimatePresence>
       </div>
