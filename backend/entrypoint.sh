@@ -1,15 +1,8 @@
 #!/bin/bash
 
-# Attendre que la base de données soit prête
+# Attendre que la base de données soit prête (version simplifiée)
 echo "Waiting for database..."
-python manage.py migrate --check
-while [ $? -ne 0 ]; do
-    echo "Database not ready, waiting..."
-    sleep 2
-    python manage.py migrate --check
-done
-
-echo "Database is ready!"
+sleep 5
 
 # Exécuter les migrations
 echo "Running migrations..."
@@ -34,4 +27,6 @@ ls -la /app/staticfiles/admin/ || echo "Admin static files not found!"
 
 # Démarrer l'application
 echo "Starting application..."
-exec daphne -p 8000 -b 0.0.0.0 permini_project.asgi:application
+PORT=${PORT:-8000}
+echo "Using port: $PORT"
+exec daphne -p $PORT -b 0.0.0.0 permini_project.asgi:application
